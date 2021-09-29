@@ -17,26 +17,24 @@
         <!-- Scripts -->
         {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 
+        <script src="http://alpine.test/packages/persist/dist/cdn.js"></script>
+        <script defer src="http://alpine.test/packages/alpinejs/dist/cdn.js"></script>
     </head>
     <body>
         <div class="font-sans text-gray-800 dark:text-gray-100 bg-gray-200 dark:bg-gray-800 h-screen">
             {{ $slot }}
         </div>
 
-        <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-        <script defer src="http://alpine.test/packages/alpinejs/dist/cdn.js"></script>
         <script>
             document.addEventListener('alpine:init', () => {
-                Alpine.store('darkMode', function() {
-                    console.log('store', this.$persist)
-                    let thing = {
-                        on: this.$persist(true)
-                    }
+                console.log('init', Alpine)
+                Alpine.store('darkMode', {
+                    on: Alpine.$persist(true)
+                });
 
-                    thing.on.initialize(thing, 'on', 'on');
-
-                    return thing;
-            })
+                Alpine.store('locationServices', {
+                    on: Alpine.$persist(true)
+                });
 
                 // Alpine.data('dropdown', function () {
                 //     console.log('data', this.$persist)
@@ -44,7 +42,8 @@
                 //         open: this.$persist(false)
                 //     }
                 // })
-            })
+            });
         </script>
+
     </body>
 </html>
